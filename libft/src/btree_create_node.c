@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlowcase.c                                    :+:      :+:    :+:   */
+/*   ft_btree_create_node.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/26 12:25:21 by edhommee          #+#    #+#             */
-/*   Updated: 2017/06/26 12:25:23 by edhommee         ###   ########.fr       */
+/*   Created: 2017/07/11 16:03:00 by edhommee          #+#    #+#             */
+/*   Updated: 2017/07/15 13:28:37 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-char		*ft_strlowcase(char *s)
+t_btree		*btree_create_node(void *item)
 {
-	char	*tmp;
+	t_btree		*new_node;
 
-	tmp = s;
-	while (*tmp)
+	new_node = (t_btree*)malloc(sizeof(t_btree));
+	if (!new_node)
+		return (NULL);
+	else
 	{
-		*tmp = ft_tolower((int)*tmp);
-		tmp++;
+		new_node->item = item;
+		new_node->left = NULL;
+		new_node->right = NULL;
 	}
-	return (s);
+	return(new_node);
 }

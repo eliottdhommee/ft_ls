@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlowcase.c                                    :+:      :+:    :+:   */
+/*   btree_level_count.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/26 12:25:21 by edhommee          #+#    #+#             */
-/*   Updated: 2017/06/26 12:25:23 by edhommee         ###   ########.fr       */
+/*   Created: 2017/07/15 11:40:02 by edhommee          #+#    #+#             */
+/*   Updated: 2017/07/15 13:24:08 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-char		*ft_strlowcase(char *s)
+static int	ft_max(int a, int b)
 {
-	char	*tmp;
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
 
-	tmp = s;
-	while (*tmp)
-	{
-		*tmp = ft_tolower((int)*tmp);
-		tmp++;
-	}
-	return (s);
+int			btree_level_count(t_btree *root)
+{
+	if (!root)
+		return (0);
+	return(ft_max(btree_level_count(root->left),
+			btree_level_count(root->right)) + 1);
 }

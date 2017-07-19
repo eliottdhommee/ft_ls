@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlowcase.c                                    :+:      :+:    :+:   */
+/*   rb_rotate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/26 12:25:21 by edhommee          #+#    #+#             */
-/*   Updated: 2017/06/26 12:25:23 by edhommee         ###   ########.fr       */
+/*   Created: 2017/07/19 11:18:39 by edhommee          #+#    #+#             */
+/*   Updated: 2017/07/19 11:42:19 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-char		*ft_strlowcase(char *s)
+void		rb_left_rotate(t_btree *node)
 {
-	char	*tmp;
+	t_btree		*tmp;
 
-	tmp = s;
-	while (*tmp)
-	{
-		*tmp = ft_tolower((int)*tmp);
-		tmp++;
-	}
-	return (s);
+	tmp = node->left;
+	node->left = tmp->right;
+	tmp->right->parent = node;
+	tmp->right = node;
+	node->parent = tmp;
+}
+
+void		rb_right_rotate(t_btree *node)
+{
+	t_btree		*tmp;
+
+	tmp = node->right;
+	node->right = tmp->left;
+	tmp->left->parent = node;
+	tmp->left = node;
+	node->parent = tmp;
 }
