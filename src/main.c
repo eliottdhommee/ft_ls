@@ -6,52 +6,91 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:45:40 by edhommee          #+#    #+#             */
-/*   Updated: 2017/07/20 15:48:23 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/07/25 15:51:56 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <ft_ls.h>
 
-int			cmpf(void *str1, void *str2)
+void		print_files(t_btree **root)
 {
-	return (ft_strcmp((const char *)str1, (const char *)str2));
+	if (root)
+	{
+		print_files(&(*root)->left);
+		ft_printf(((t_file*)(*root)->item)->path);
+		if (((t_file*)(*root)->item)->root_files)
+			print_files(((t_file*)(*root)->item)->root_files);
+		if (((t_file*)(*root)->item)->root_dir)
+			print_files(((t_file*)(*root)->item)->root_dir);
+		print_files(&(*root)->right);
+	}
 }
 
-void		sisi(void *str)
+char		*get_flags_ls(char **argv)
 {
-	ft_printf((char*)str);
+	int			i;
+	int			j;
+	char		*flags;
+
+	flags = NULL;
+	flags = init_flags(flags);
+	i = 1;
+	while (*argv[i] && argv[i][0] == '-' && flags['-'] != '-')
+	{
+		j = 1;
+		while (argv[i][j])
+		{
+			if (ft_strchr("ABCFGHLOPRSTUW@abcdefghiklmnopqrstuwx1", argv[i][j]))
+				flags[(int)argv[i][j]] = argv[i][j];
+			else if (j == 1 && argv[i][j] == '-')
+				flags[(int)argv[i][j]] = argv[i][j];
+			/*
+			**else
+			**    error();
+			*/
+			j++;
+		}
+		i++;
+	}
+	return (flags);
 }
-int			main(void)
+
+void			get_args(t_btree **files, t_btree **dir, char **argv)
 {
-	t_btree *root;
-	char		*i;
-	char		*j;
-	char		*k;
-	char		*l;
-	char		*m;
-	char		*n;
-	char		*o;
-	char		*p;
-	char		*q;
-	root = NULL;
-	i = ft_strdup("1");
-	j = ft_strdup("2");
-	k = ft_strdup("3");
-	l = ft_strdup("4");
-	m = ft_strdup("5");
-	n = ft_strdup("6");
-	o = ft_strdup("7");
-	p = ft_strdup("8");
-	q = ft_strdup("9");
-	rb_insert(&root, i, &cmpf);
-	rb_insert(&root, j, &cmpf);
-	rb_insert(&root, k, &cmpf);
-	rb_insert(&root, l, &cmpf);
-	rb_insert(&root, m, &cmpf);
-	rb_insert(&root, n, &cmpf);
-	rb_insert(&root, o, &cmpf);
-	rb_insert(&root, p, &cmpf);
-	rb_insert(&root, q, &cmpf);
-	btree_print(root, "root", 0);
+	t_file	*tmp;
+	int		i;
+
+	i = 1;
+	while (*argv[i] && argv[i][0] == '-' && (i == 1 || argv[i - 1][1] != '-'))
+	{
+		i++;
+	}
+	while (*argv[i])
+	{
+		tmp = get_stat(argv[i]);
+		if (tmp)
+		{
+			if (tmp->file_stat.st_mode & S_IFDIR)
+				btree_insert_data(&(*dir),tmp, &cmpf);
+			else
+				btree_insert_data(&(*files), tmp, &cmpf);
+			i++;
+		}
+	}
+}
+
+int				main(int argc, char **argv)
+{
+	char		*flags;
+	t_btree		*files;
+	t_btree		*dir;
+
+	flags =NULL;
+	dir = NULL;
+	argc = 1;
+	flags = get_flags_ls(argv);
+	get_args(&files, &dir, argv);
+	print_files(&(files));
+	print_files(&(dir));
 	return (0);
 }
