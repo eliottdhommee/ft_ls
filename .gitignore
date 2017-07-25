@@ -1,2 +1,6 @@
 .*.swp
 libft/
+libft
+libft/*
+obj/
+ft_ls
