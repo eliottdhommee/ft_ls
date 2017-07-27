@@ -6,7 +6,7 @@
 #    By: edhommee <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 09:49:17 by edhommee          #+#    #+#              #
-#*   Updated: 2017/07/24 14:48:08 by edhommee         ###   ########.fr       *#
+#*   Updated: 2017/07/26 15:22:30 by edhommee         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 
 SRC_DIR		= ./src/
-SRC_NAME	= main.c compare.c dir_tools.c init.c
-:q
+SRC_NAME	= main.c dir_tools.c init.c
+
 SRC			= $(addprefix $(SRC_DIR),$(SRC_NAME))
 
 OBJ_DIR		= ./obj/
