@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 14:28:23 by edhommee          #+#    #+#             */
-/*   Updated: 2017/07/27 18:19:20 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/02 16:58:25 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ t_file		*get_stat(t_file *dir, char *pathfile)
 	if (!(file = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
 	lstat(path_final, &file->file_stat);
-	file->path = path_final;
-	file->name = pathfile;
+	file->path = ft_strdup(path_final);
+	file->name = ft_strdup(pathfile);
 	file->root_files = root1;
 	return (file);
 }
 
-t_file		*get_dir(t_file **file, int R)
+t_file		*get_dir(t_file **file, char *flags)
 {
 	DIR				*fd;
 	struct dirent	*dir;
@@ -68,11 +68,11 @@ t_file		*get_dir(t_file **file, int R)
 	while ((dir = readdir(fd)))
 	{
 		tmp = get_stat(*file, dir->d_name);
-		if ((dir->d_name[0] != '.'))
+		if ((dir->d_name[0] != '.') || flags['a'] == 'a')
 		{
-			if ((tmp->file_stat.st_mode & S_IFDIR) && R && 
+			if ((tmp->file_stat.st_mode & S_IFDIR) && flags['R'] == 'R' && 
 					ft_strcmp(tmp->name, ".\0") && ft_strcmp(tmp->name, "..\0"))
-				tmp = get_dir(&(tmp), R);
+				tmp = get_dir(&(tmp), flags);
 			if (tmp)
 			{
 				btree_insert_data(&((*file)->root_files), tmp, &cmpf);

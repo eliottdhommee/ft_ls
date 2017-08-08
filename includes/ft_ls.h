@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/07/27 18:04:21 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/02 16:57:33 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ typedef struct	s_file
 
 int				cmpf(void *data, void *data2);
 char			*init_flags(char *str);
-char			*get_flags_ls(char **argv);
+char			*get_flags_ls(char **argv, char *flags);
 void			error(void);
-void			get_args(t_btree **files, t_btree **dir, char **argv, int R);
-t_file			*get_dir(t_file **file, int R);
+void			get_args(t_btree **files, t_btree **dir,
+						char **argv, char *flags);
+t_file			*get_dir(t_file **file, char *flags);
 t_file			*get_stat(t_file *dir, char *pathfile);
-void			print_files(t_btree *root);
+void			print_files(t_btree *root, char *flags);
 
 #endif

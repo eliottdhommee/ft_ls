@@ -6,7 +6,7 @@
 #    By: edhommee <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 09:49:17 by edhommee          #+#    #+#              #
-#*   Updated: 2017/07/26 15:22:30 by edhommee         ###   ########.fr       *#
+#*   Updated: 2017/08/02 15:36:53 by edhommee         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ LIB_LINK	= -Llibft -lft
 all: $(NAME)
 
 $(NAME): obj $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(LIB_LINK) -o $(NAME) $(OBJ) -fsanitize=address
+	$(CC) $(CFLAGS) $(LIB_LINK) -o $(NAME) $(OBJ)
 
 obj:
 	mkdir -p $(OBJ_DIR)
