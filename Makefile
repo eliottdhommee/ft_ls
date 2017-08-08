@@ -6,7 +6,7 @@
 #    By: edhommee <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 09:49:17 by edhommee          #+#    #+#              #
-#*   Updated: 2017/08/02 15:36:53 by edhommee         ###   ########.fr       *#
+#*   Updated: 2017/08/08 11:01:19 by edhommee         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 
 SRC_DIR		= ./src/
-SRC_NAME	= main.c dir_tools.c init.c
+SRC_NAME	= main.c dir_tools.c init.c print.c
 
 SRC			= $(addprefix $(SRC_DIR),$(SRC_NAME))
 

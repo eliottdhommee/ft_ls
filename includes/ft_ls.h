@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/02 16:57:33 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/08 11:01:12 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <libft.h>
 # include <dirent.h>
 # include <sys/stat.h>
+
 typedef struct	s_file
 {
 	struct stat	file_stat;
@@ -33,5 +34,6 @@ void			get_args(t_btree **files, t_btree **dir,
 t_file			*get_dir(t_file **file, char *flags);
 t_file			*get_stat(t_file *dir, char *pathfile);
 void			print_files(t_btree *root, char *flags);
+void			print_dir(t_btree *root, char *flags);
 
 #endif
