@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/08 11:01:12 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/08 15:24:19 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ void			get_args(t_btree **files, t_btree **dir,
 						char **argv, char *flags);
 t_file			*get_dir(t_file **file, char *flags);
 t_file			*get_stat(t_file *dir, char *pathfile);
-void			print_files(t_btree *root, char *flags);
+void			print_main(t_btree *root, char *flags);
 void			print_dir(t_btree *root, char *flags);
+char			get_file_type(struct stat filestat);
+char			*get_rights(struct stat filestat);
 
 #endif

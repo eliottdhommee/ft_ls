@@ -16,7 +16,7 @@ CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 
 SRC_DIR		= ./src/
-SRC_NAME	= main.c dir_tools.c init.c print.c
+SRC_NAME	= main.c dir_tools.c init.c print.c print_long.c
 
 SRC			= $(addprefix $(SRC_DIR),$(SRC_NAME))
 

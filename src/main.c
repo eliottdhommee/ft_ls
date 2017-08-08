@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:45:40 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/08 11:01:29 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/08 12:52:22 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char		*get_flags_ls(char **argv, char *flags)
 	return (flags);
 }
 
-void			get_args(t_btree **files, t_btree **dir, char **argv, char *flags)
+void		get_args(t_btree **files, t_btree **dir, char **argv, char *flags)
 {
 	t_file	*tmp;
 	int		i;
@@ -50,7 +50,7 @@ void			get_args(t_btree **files, t_btree **dir, char **argv, char *flags)
 	}
 	if (argv[i])
 	{
-		while (argv[i])
+		while (argv[i++])
 		{
 			tmp = get_stat(NULL, argv[i]);
 			if (tmp)
@@ -63,7 +63,6 @@ void			get_args(t_btree **files, t_btree **dir, char **argv, char *flags)
 				else
 					btree_insert_data(files, tmp, &cmpf);
 			}
-			i++;
 		}
 	}
 }
@@ -73,12 +72,10 @@ int				main(int argc, char **argv)
 	char		*flags;
 	t_btree		*files;
 	t_btree		*dir;
-	int			R;
 	t_file		*tmp;
 
 	tmp = NULL;
-	R = 0;
-	flags =NULL;
+	flags = NULL;
 	flags = init_flags(flags);
 	dir = NULL;
 	if (argc > 1)
@@ -93,7 +90,7 @@ int				main(int argc, char **argv)
 	else
 	{
 		print_dir(files, flags);
-		print_files(dir, flags);
+		print_main(dir, flags);
 	}
 	return (0);
 }
