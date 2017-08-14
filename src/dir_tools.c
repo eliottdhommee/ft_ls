@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 14:28:23 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/14 16:31:08 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/14 16:40:14 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ char		*check_padding(t_file *file, char *flags)
 		flags['3'] = (char)ft_strlen(file->pass);
 	if ((size_t)flags['4'] < ft_strlen(file->grp))
 		flags['4'] = (char)ft_strlen(file->grp);
-	ft_printf("%d \n", file->file_stat.st_size);
 	if ((int)flags['5'] < ft_nbrlen(file->file_stat.st_size))
 		flags['5'] = (char)ft_nbrlen(file->file_stat.st_size);
 	return (flags);
