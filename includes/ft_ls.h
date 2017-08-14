@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/08 15:24:19 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/14 14:42:16 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,19 @@
 # include <libft.h>
 # include <dirent.h>
 # include <sys/stat.h>
+# include <pwd.h>
+# include <sys/types.h>
+# include <grp.h>
 
-typedef struct	s_file
+typedef struct		s_file
 {
-	struct stat	file_stat;
-	char		*name;
-	char		*path;
-	t_btree		*root_files;
-}				t_file;
+	struct stat		file_stat;
+	char			*name;
+	char			*path;
+	t_btree			*root_files;
+	char			*pass;
+	char			*grp;
+}					t_file;
 
 int				cmpf(void *data, void *data2);
 char			*init_flags(char *str);

@@ -6,15 +6,34 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 10:57:20 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/08 15:57:33 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/14 14:48:29 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <ft_ls.h>
 
+static char		*get_time(const time_t *time)
+{
+	int		len;
+	char	*str;
+
+	str = ctime(time);
+	len = ft_strlen(str);
+	str[len - 9] = '\0';
+	str = &str[4];
+	return (str);
+}
+
 static void		print_dir_long(t_btree *root)
 {
-	ft_printf("%s\n", get_rights(((t_file*)root->item)->file_stat));
+	ft_printf("%s %d %s %s %d %s %s \n",
+			get_rights(((t_file*)root->item)->file_stat),
+			((t_file*)root->item)->file_stat.st_nlink,
+			((t_file*)root->item)->pass,
+			((t_file*)root->item)->grp,
+			((t_file*)root->item)->file_stat.st_size,
+			get_time(&((t_file*)root->item)->file_stat.st_mtime),
+			((t_file*)root->item)->name);
 }
 
 void		print_dir(t_btree *root, char *flags)

@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 14:28:23 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/08 12:43:02 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/14 14:45:45 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,28 @@ char		*create_path(char *str1, char *str2)
 	return (res);
 }
 
+char		*get_uid(uid_t uid)
+{
+	struct passwd	*pass;
+
+	pass = getpwuid(uid);
+	if (pass)
+		return (ft_strdup(pass->pw_name));
+	else
+		return (ft_itoa(uid));
+}
+
+char		*get_gid(gid_t gid)
+{
+	struct group	*grp;
+
+	grp = getgrgid(gid);
+	if (grp)
+		return (ft_strdup(grp->gr_name));
+	else
+		return (ft_itoa(gid));
+}
+
 t_file		*get_stat(t_file *dir, char *pathfile)
 {
 	t_file		*file;
@@ -48,6 +70,8 @@ t_file		*get_stat(t_file *dir, char *pathfile)
 	if (!(file = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
 	lstat(path_final, &file->file_stat);
+	file->pass = get_uid(file->file_stat.st_uid);
+	file->grp = get_gid(file->file_stat.st_gid);
 	file->path = ft_strdup(path_final);
 	file->name = ft_strdup(pathfile);
 	file->root_files = root1;
