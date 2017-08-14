@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 10:57:20 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/14 14:48:29 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/14 16:27:29 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ static char		*get_time(const time_t *time)
 	return (str);
 }
 
-static void		print_dir_long(t_btree *root)
+static void		print_dir_long(t_btree *root, char *flags)
 {
-	ft_printf("%s %d %s %s %d %s %s \n",
+	ft_printf("%s %*u %*s %*s %*u %s %s \n",
 			get_rights(((t_file*)root->item)->file_stat),
-			((t_file*)root->item)->file_stat.st_nlink,
-			((t_file*)root->item)->pass,
-			((t_file*)root->item)->grp,
-			((t_file*)root->item)->file_stat.st_size,
+			(int)flags['2'], ((t_file*)root->item)->file_stat.st_nlink,
+			(int)flags['3'], ((t_file*)root->item)->pass,
+			(int)flags['4'], ((t_file*)root->item)->grp,
+			(int)flags['5'], ((t_file*)root->item)->file_stat.st_size,
 			get_time(&((t_file*)root->item)->file_stat.st_mtime),
 			((t_file*)root->item)->name);
 }
@@ -45,7 +45,7 @@ void		print_dir(t_btree *root, char *flags)
 		else
 			print_dir(root->left, flags);
 		if (flags['l'] == 'l')
-			print_dir_long(root);
+			print_dir_long(root, flags);
 		else
 			ft_printf("\n%s", ((t_file*)root->item)->name);
 		if (flags['r'] == 'r')
