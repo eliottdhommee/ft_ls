@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/14 14:42:16 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/14 18:17:16 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <pwd.h>
 # include <sys/types.h>
 # include <grp.h>
+# define OPTIONS "ABCFGHLOPRSTUW@abcdefghiklmnopqrstuwx1"
 
 typedef struct		s_file
 {
@@ -32,15 +33,14 @@ typedef struct		s_file
 
 int				cmpf(void *data, void *data2);
 char			*init_flags(char *str);
-char			*get_flags_ls(char **argv, char *flags);
 void			error(void);
-void			get_args(t_btree **files, t_btree **dir,
-						char **argv, char *flags);
 t_file			*get_dir(t_file **file, char *flags);
 t_file			*get_stat(t_file *dir, char *pathfile);
 void			print_main(t_btree *root, char *flags);
 void			print_dir(t_btree *root, char *flags);
 char			get_file_type(struct stat filestat);
 char			*get_rights(struct stat filestat);
+char			*get_time(const time_t *time);
+char			*create_path(char *str1, char *str2);
 
 #endif

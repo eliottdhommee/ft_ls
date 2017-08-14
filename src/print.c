@@ -6,23 +6,11 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 10:57:20 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/14 16:27:29 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/14 18:29:45 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <ft_ls.h>
-
-static char		*get_time(const time_t *time)
-{
-	int		len;
-	char	*str;
-
-	str = ctime(time);
-	len = ft_strlen(str);
-	str[len - 9] = '\0';
-	str = &str[4];
-	return (str);
-}
+#include <ft_ls.h>
 
 static void		print_dir_long(t_btree *root, char *flags)
 {
@@ -36,7 +24,7 @@ static void		print_dir_long(t_btree *root, char *flags)
 			((t_file*)root->item)->name);
 }
 
-void		print_dir(t_btree *root, char *flags)
+void			print_dir(t_btree *root, char *flags)
 {
 	if (root)
 	{
@@ -55,7 +43,7 @@ void		print_dir(t_btree *root, char *flags)
 	}
 }
 
-void		print_main(t_btree *root, char *flags)
+void			print_main(t_btree *root, char *flags)
 {
 	if (root)
 	{
@@ -63,19 +51,18 @@ void		print_main(t_btree *root, char *flags)
 			print_main(root->right, flags);
 		else
 			print_main(root->left, flags);
-		if (((t_file*)root->item)->file_stat.st_mode 
+		if (((t_file*)root->item)->file_stat.st_mode
 				& S_IFDIR && flags['R'] == 'R')
 		{
 			ft_printf("\n%s:", ((t_file*)root->item)->path);
 			print_dir(((t_file*)root->item)->root_files, flags);
 			ft_printf("\n");
 		}
-		if (((t_file*)root->item)->root_files != NULL)
+		if (((t_file*)root->item)->root_files)
 			print_main(((t_file*)root->item)->root_files, flags);
-		if(flags['r'])
+		if (flags['r'])
 			print_main(root->left, flags);
 		else
 			print_main(root->right, flags);
 	}
 }
-

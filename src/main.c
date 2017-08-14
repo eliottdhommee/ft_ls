@@ -6,24 +6,24 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:45:40 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/08 12:52:22 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/14 18:42:09 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <ft_ls.h>
+#include <ft_ls.h>
 
-char		*get_flags_ls(char **argv, char *flags)
+static char		*get_flags_ls(char **argv, char *flags)
 {
 	int			i;
 	int			j;
 
-	i = 1;
-	while (argv[i] && argv[i][0] == '-' && flags['-'] != '-')
+	i = 0;
+	while (argv[++i] && argv[i][0] == '-' && flags['-'] != '-')
 	{
-		j = 1;
-		while (argv[i][j])
+		j = 0;
+		while (argv[i][++j])
 		{
-			if (ft_strchr("ABCFGHLOPRSTUW@abcdefghiklmnopqrstuwx1", argv[i][j]))
+			if (ft_strchr(OPTIONS, argv[i][j]))
 				flags[(int)argv[i][j]] = argv[i][j];
 			else if (j == 1 && argv[i][j] == '-')
 				flags[(int)argv[i][j]] = argv[i][j];
@@ -31,49 +31,49 @@ char		*get_flags_ls(char **argv, char *flags)
 			**else
 			**    error();
 			*/
-			j++;
 		}
-		i++;
 	}
 	return (flags);
 }
 
-void		get_args(t_btree **files, t_btree **dir, char **argv, char *flags)
+static void		get_args(t_btree **fil, t_btree **dir, char **tab, char *flags)
 {
 	t_file	*tmp;
 	int		i;
 
 	i = 1;
-	while (argv[i] && argv[i][0] == '-' && (i == 1 || argv[i - 1][1] != '-'))
+	while (tab[i] && tab[i][0] == '-' && (i == 1 || tab[i - 1][1] != '-'))
 	{
 		i++;
 	}
-	if (argv[i])
+	if (tab[i])
 	{
-		while (argv[i++])
+		while (tab[i++])
 		{
-			tmp = get_stat(NULL, argv[i]);
+			tmp = get_stat(NULL, tab[i]);
 			if (tmp)
 			{
 				if (S_ISDIR(tmp->file_stat.st_mode))
 				{
 					tmp = get_dir(&tmp, flags);
-					btree_insert_data(dir,tmp, &cmpf);
+					btree_insert_data(dir, tmp, &cmpf);
 				}
 				else
-					btree_insert_data(files, tmp, &cmpf);
+					btree_insert_data(fil, tmp, &cmpf);
 			}
 		}
 	}
 }
 
-int				main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
 	char		*flags;
 	t_btree		*files;
 	t_btree		*dir;
 	t_file		*tmp;
+	int			i;
 
+	i = 0;
 	tmp = NULL;
 	flags = NULL;
 	flags = init_flags(flags);

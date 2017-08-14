@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   cmp.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
+/*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/24 11:19:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/14 18:40:31 by edhommee         ###   ########.fr       */
+/*   Created: 2017/08/14 17:37:25 by edhommee          #+#    #+#             */
+/*   Updated: 2017/08/14 17:38:14 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-char		*init_flags(char *str)
+int			cmpf(void *data, void *data2)
 {
-	str = ft_memalloc(sizeof(char*) * 128);
-	ft_bzero(str, sizeof(char) * 127);
-	return (str);
+	return (ft_strcmp(((t_file*)data)->name, ((t_file*)data2)->name));
 }
+
