@@ -6,15 +6,15 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:19:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/14 18:40:31 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/15 19:12:54 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-char		*init_flags(char *str)
+char		*init_flags(char **str)
 {
-	str = ft_memalloc(sizeof(char*) * 128);
-	ft_bzero(str, sizeof(char) * 127);
-	return (str);
+	*str = ft_memalloc(sizeof(char*) * 128);
+	ft_bzero(*str, sizeof(char) * 127);
+	return (*str);
 }

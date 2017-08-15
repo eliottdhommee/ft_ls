@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:45:40 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/15 17:20:28 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/15 19:58:55 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ int			main(int argc, char **argv)
 	t_file		*tmp;
 
 	tmp = NULL;
-	flags = NULL;
-	flags = init_flags(flags);
-	dir = NULL;
+	flags = init_flags(&flags);
 	if (argc > 1)
 		flags = get_flags_ls(argv, flags);
 	get_args(&files, &dir, argv, flags);
@@ -84,6 +82,6 @@ int			main(int argc, char **argv)
 		btree_insert_data(&dir, tmp, &cmpf);
 	}
 	print_dir(files, flags);
-	print_main(dir, flags, 1);
+	print_main(dir, flags, (files || dir->left || dir->right) ? 1 : 2, 1);
 	return (0);
 }
