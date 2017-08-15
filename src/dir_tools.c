@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 14:28:23 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/14 18:00:57 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/15 17:30:11 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ char			*create_path(char *str1, char *str2)
 	if (!(res = ft_strnew(size + 1)))
 		return (NULL);
 	ft_strcpy(res, (char *)str1);
-	if (str1[i - 1] != '/')
-		ft_strcat(res, "/");
+	ft_strcat(res, "/");
 	ft_strcat(res, str2);
 	return (res);
 }
@@ -37,7 +36,13 @@ static char		*check_padding(t_file *file, char *flags)
 		flags['3'] = (char)ft_strlen(file->pass);
 	if ((size_t)flags['4'] < ft_strlen(file->grp))
 		flags['4'] = (char)ft_strlen(file->grp);
-	if ((int)flags['5'] < ft_nbrlen(file->file_stat.st_size))
+	if (S_ISBLK(file->file_stat.st_mode) || S_ISCHR(file->file_stat.st_mode))
+	{
+		if ((int)flags['5'] < 9)
+			flags['5'] = 9;
+		flags['6'] = flags['5'] - 5;
+	}
+	else if ((int)flags['5'] < ft_nbrlen(file->file_stat.st_size))
 		flags['5'] = (char)ft_nbrlen(file->file_stat.st_size);
 	return (flags);
 }
@@ -55,6 +60,7 @@ t_file			*get_dir(t_file **file, char *flags)
 		tmp = get_stat(*file, dir->d_name);
 		if ((dir->d_name[0] != '.') || flags['a'] == 'a')
 		{
+			(*file)->size += tmp->file_stat.st_blocks;
 			if ((tmp->file_stat.st_mode & S_IFDIR) && flags['R'] == 'R' &&
 					ft_strcmp(tmp->name, ".\0") && ft_strcmp(tmp->name, "..\0"))
 				tmp = get_dir(&(tmp), flags);

@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/14 18:17:16 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/15 13:34:42 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct		s_file
 	t_btree			*root_files;
 	char			*pass;
 	char			*grp;
+	int				size;
 }					t_file;
 
 int				cmpf(void *data, void *data2);
@@ -36,7 +37,7 @@ char			*init_flags(char *str);
 void			error(void);
 t_file			*get_dir(t_file **file, char *flags);
 t_file			*get_stat(t_file *dir, char *pathfile);
-void			print_main(t_btree *root, char *flags);
+void			print_main(t_btree *root, char *flags, int opt);
 void			print_dir(t_btree *root, char *flags);
 char			get_file_type(struct stat filestat);
 char			*get_rights(struct stat filestat);

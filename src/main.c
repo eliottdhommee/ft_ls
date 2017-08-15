@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:45:40 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/14 18:42:09 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/15 17:20:28 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,20 @@ static void		get_args(t_btree **fil, t_btree **dir, char **tab, char *flags)
 	{
 		i++;
 	}
-	if (tab[i])
+	while (tab[i])
 	{
-		while (tab[i++])
+		tmp = get_stat(NULL, tab[i]);
+		if (tmp)
 		{
-			tmp = get_stat(NULL, tab[i]);
-			if (tmp)
+			if (S_ISDIR(tmp->file_stat.st_mode))
 			{
-				if (S_ISDIR(tmp->file_stat.st_mode))
-				{
-					tmp = get_dir(&tmp, flags);
-					btree_insert_data(dir, tmp, &cmpf);
-				}
-				else
-					btree_insert_data(fil, tmp, &cmpf);
+				tmp = get_dir(&tmp, flags);
+				btree_insert_data(dir, tmp, &cmpf);
 			}
+			else
+				btree_insert_data(fil, tmp, &cmpf);
 		}
+		i++;
 	}
 }
 
@@ -71,9 +69,7 @@ int			main(int argc, char **argv)
 	t_btree		*files;
 	t_btree		*dir;
 	t_file		*tmp;
-	int			i;
 
-	i = 0;
 	tmp = NULL;
 	flags = NULL;
 	flags = init_flags(flags);
@@ -81,16 +77,13 @@ int			main(int argc, char **argv)
 	if (argc > 1)
 		flags = get_flags_ls(argv, flags);
 	get_args(&files, &dir, argv, flags);
-	if (dir == NULL)
+	if (dir == NULL && files == NULL)
 	{
 		tmp = get_stat(NULL, ft_strdup(".\0"));
 		tmp = get_dir(&tmp, flags);
-		print_dir(tmp->root_files, flags);
+		btree_insert_data(&dir, tmp, &cmpf);
 	}
-	else
-	{
-		print_dir(files, flags);
-		print_main(dir, flags);
-	}
+	print_dir(files, flags);
+	print_main(dir, flags, 1);
 	return (0);
 }

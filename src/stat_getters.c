@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 17:52:54 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/14 18:00:47 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/15 17:22:52 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,12 @@ static char		*get_gid(gid_t gid)
 t_file		*get_stat(t_file *dir, char *pathfile)
 {
 	t_file		*file;
-	t_btree		*root1;
 	char		*path_final;
 
-	root1 = NULL;
-	if (dir)
+	if (dir != NULL)
 		path_final = create_path(dir->path, pathfile);
 	else
-		path_final = ft_strcat(pathfile, "/");
+		path_final = ft_strdup(pathfile);
 	if (!(file = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
 	lstat(path_final, &file->file_stat);
@@ -64,7 +62,7 @@ t_file		*get_stat(t_file *dir, char *pathfile)
 	file->grp = get_gid(file->file_stat.st_gid);
 	file->path = ft_strdup(path_final);
 	file->name = ft_strdup(pathfile);
-	file->root_files = root1;
+	file->root_files = NULL;
+	file->size = 0;
 	return (file);
 }
-
