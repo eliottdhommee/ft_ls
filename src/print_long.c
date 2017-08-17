@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 13:48:12 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/14 17:36:13 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/17 16:02:52 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char		*get_rights(struct stat filestat)
 {
 	char	*rights;
 
-	rights = ft_strnew(11);
+	rights = ft_strnew(10);
 	rights[0] = get_file_type(filestat);
 	rights[1] = (filestat.st_mode & S_IRUSR) ? 'r' : '-';
 	rights[2] = (filestat.st_mode & S_IWUSR) ? 'w' : '-';

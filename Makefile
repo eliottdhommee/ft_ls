@@ -17,7 +17,7 @@ CFLAGS		= -Wall -Wextra -Werror
 
 SRC_DIR		= ./src/
 SRC_NAME	= main.c dir_tools.c init.c print.c print_long.c cmp.c\
-			  stat_getters.c
+			  stat_getters.c cmptime.c
 
 SRC			= $(addprefix $(SRC_DIR),$(SRC_NAME))
 

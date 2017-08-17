@@ -6,22 +6,22 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 17:52:54 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/15 17:22:52 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/17 17:44:02 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-char		*get_time(const time_t *time)
+int				get_time(struct stat file_stat, char *flags)
 {
-	int		len;
-	char	*str;
-
-	str = ctime(time);
-	len = ft_strlen(str);
-	str[len - 9] = '\0';
-	str = &str[4];
-	return (str);
+	if (flags['c'] == 'c')
+		return (file_stat.st_ctime);
+	else if (flags['u'] == 'u')
+		return (file_stat.st_atime);
+	else if (flags['U'] == 'U')
+		return (file_stat.st_birthtime);
+	else
+		return (file_stat.st_mtime);
 }
 
 static char		*get_uid(uid_t uid)
@@ -46,7 +46,7 @@ static char		*get_gid(gid_t gid)
 		return (ft_itoa(gid));
 }
 
-t_file		*get_stat(t_file *dir, char *pathfile)
+t_file			*get_stat(t_file *dir, char *pathfile)
 {
 	t_file		*file;
 	char		*path_final;
@@ -60,8 +60,8 @@ t_file		*get_stat(t_file *dir, char *pathfile)
 	lstat(path_final, &file->file_stat);
 	file->pass = get_uid(file->file_stat.st_uid);
 	file->grp = get_gid(file->file_stat.st_gid);
-	file->path = ft_strdup(path_final);
-	file->name = ft_strdup(pathfile);
+	file->path = path_final;
+	file->name = pathfile;
 	file->root_files = NULL;
 	file->size = 0;
 	return (file);
