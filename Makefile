@@ -16,9 +16,8 @@ CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 
 SRC_DIR		= ./src/
-SRC_NAME	= main.c dir_tools.c init.c print.c print_long.c cmp.c\
-			  stat_getters.c cmptime.c
-
+SRC_NAME	= cmp.c cmptime.c dir_tools.c get_long.c get_rights.c init.c main.c\
+			  print.c stat_getters.c
 SRC			= $(addprefix $(SRC_DIR),$(SRC_NAME))
 
 OBJ_DIR		= ./obj/
@@ -33,7 +32,7 @@ LIB_LINK	= -Llibft -lft
 all: $(NAME)
 
 $(NAME): obj $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(LIB_LINK) -o $(NAME) $(OBJ) -fsanitize=address
+	$(CC) $(CFLAGS) $(LIB_LINK) -o $(NAME) $(OBJ)
 
 obj:
 	mkdir -p $(OBJ_DIR)

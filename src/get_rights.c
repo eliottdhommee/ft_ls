@@ -6,13 +6,14 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 13:48:12 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/17 16:02:52 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/18 14:31:49 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-char		get_file_type(struct stat filestat)
+
+static char		get_file_type(struct stat filestat)
 {
 	if (S_ISBLK(filestat.st_mode))
 		return ('b');
@@ -32,7 +33,7 @@ char		get_file_type(struct stat filestat)
 		return ('w');
 }
 
-char		get_exec_permissions(int a, int b, int c)
+static char		get_exec_permissions(int a, int b, int c)
 {
 	if (!c)
 	{

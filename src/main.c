@@ -6,13 +6,13 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:45:40 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/17 18:41:18 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/18 16:25:33 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-static char		*get_flags_ls(char **argv, char *flags)
+static int		get_flags_ls(char **argv, char *flags)
 {
 	int			i;
 	int			j;
@@ -35,7 +35,7 @@ static char		*get_flags_ls(char **argv, char *flags)
 				flags['c'] = 0;
 		}
 	}
-	return (flags);
+	return (i);
 }
 
 static void		get_args(t_btree **fil, t_btree **dir, char **tab, char *flags)
@@ -43,23 +43,15 @@ static void		get_args(t_btree **fil, t_btree **dir, char **tab, char *flags)
 	t_file	*tmp;
 	int		i;
 
-	i = 1;
-	while (tab[i] && tab[i][0] == '-' && (i == 1 || tab[i - 1][1] != '-'))
-	{
-		i++;
-	}
+	i = get_flags_ls(tab, flags);
 	while (tab[i])
 	{
+		ft_printf(tab[i]);
 		tmp = get_stat(NULL, tab[i]);
 		if (tmp)
 		{
 			if (S_ISDIR(tmp->file_stat.st_mode))
-			{
-				ft_printf("1");
-				tmp = get_dir(&tmp, flags);
-				ft_printf("1");
 				btree_insert_data(dir, tmp, ret_cmpf(flags));
-			}
 			else
 				btree_insert_data(fil, tmp, ret_cmpf(flags));
 		}
@@ -74,19 +66,18 @@ int				main(int argc, char **argv)
 	t_btree		*dir;
 	t_file		*tmp;
 
-	tmp = NULL;
 	flags = init_flags(&flags);
-	if (argc > 1)
-		flags = get_flags_ls(argv, flags);
 	get_args(&files, &dir, argv, flags);
-	if (dir == NULL && files == NULL)
+	if (!argc || (dir == NULL && files == NULL))
 	{
-		tmp = get_stat(NULL, ft_strdup(".\0"));
-		tmp = get_dir(&tmp, flags);
+		tmp = get_stat(NULL, ".\0");
 		btree_insert_data(&dir, tmp, ret_cmpf(flags));
 	}
 	print_dir(files, flags);
 	print_main(dir, flags, (files || dir->left || dir->right) ? 1 : 2, 1);
-	ft_memdel((void*)&flags);
+	btree_delete(files, &delete_file);
+	btree_delete(dir, &delete_file);
+	ft_strdel(&flags);
+	while (1);
 	return (0);
 }

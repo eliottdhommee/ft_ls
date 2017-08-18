@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/17 17:45:43 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/18 16:37:44 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,25 @@ typedef struct		s_file
 	char			*name;
 	char			*path;
 	t_btree			*root_files;
+	int				size;
 	char			*pass;
 	char			*grp;
-	int				size;
 }					t_file;
 
 void				*ret_cmpf(char *flags);
 char				*init_flags(char **str);
+void				delete_tab(char **tab);
 void				error(void);
-t_file				*get_dir(t_file **file, char *flags);
+void				get_dir(t_file *file, char *flags);
 t_file				*get_stat(t_file *dir, char *pathfile);
-int					print_main(t_btree *root, char *flags, int opt, int first);
+int					print_main(t_btree *root, char *flags, int opt, int f);
 void				print_dir(t_btree *root, char *flags);
-char				get_file_type(struct stat filestat);
 char				*get_rights(struct stat filestat);
-int					get_time(struct stat file_stat, char *flags);
-char				*create_path(char *str1, char *str2);
 int					cmpt(void *data, void *data2);
 int					cmptc(void *data, void *data2);
 int					cmptu(void *data, void *data2);
 int					cmptum(void *data, void *data2);
+void				delete_file(void *file);
+char				**get_long(t_file *file, char *flags);
 
 #endif

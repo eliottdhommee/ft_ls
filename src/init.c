@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:19:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/17 17:39:48 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/18 16:45:33 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,22 @@ char		*init_flags(char **str)
 	return (*str);
 }
 
-void		delete_file(t_file *file)
+void		delete_tab(char **tab)
+{
+	free(tab[0]);
+	free(tab[2]);
+}
+
+void		delete_file(void *file)
 {
 	if (!file)
 		return ;
 	else
 	{
-		ft_memdel((void*)&file->name);
-		ft_memdel((void*)&file->pass);
-		ft_memdel((void*)&file->pass);
-		ft_memdel((void*)&file->grp);
-		ft_memdel((void*)&file->size);
-		ft_memdel((void*)&file->root_files);
-		ft_memdel((void*)&file->file_stat);
+		ft_memdel((void*)&((t_file*)file)->name);
+		ft_memdel((void*)&((t_file*)file)->pass);
+		ft_memdel((void*)&((t_file*)file)->path);
+		ft_memdel((void*)&((t_file*)file)->grp);
 		ft_memdel((void*)&file);
 	}
 }
