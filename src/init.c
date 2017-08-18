@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:19:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/18 16:45:33 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/18 16:46:46 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void		delete_tab(char **tab)
 {
 	free(tab[0]);
 	free(tab[2]);
+	free(tab);
 }
 
 void		delete_file(void *file)

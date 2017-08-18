@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 10:57:20 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/18 16:43:45 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/18 16:47:07 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void		print_dir_long(t_btree *root, char *flags)
 				(int)flags['5'], ((t_file*)root->item)->file_stat.st_size,
 				tab[1],
 				((t_file*)root->item)->name, tab[0]);
-	free(tab);
+	delete_tab(tab);
 }
 
 void			print_dir(t_btree *root, char *flags)
