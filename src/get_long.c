@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 14:29:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/18 16:42:33 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/20 12:31:10 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,24 @@ static int				get_time(struct stat file_stat, char *flags)
 		return (file_stat.st_mtime);
 }
 
-static char		*cut_time(const time_t time)
+static char		*cut_time(const time_t file_time, char *flags)
 {
-	int		len;
 	char	*str;
 
-	str = ctime(&time);
-	len = ft_strlen(str);
-	str[len - 9] = '\0';
+	str = ctime(&file_time);
+	str[24] = '\0';
+	if (!flags['T'])
+	{
+		if (file_time < time(NULL) - 15778800 || file_time > time(NULL) + 15778800)
+		{
+			str[11] = ' ';
+			str[12] = str[20];
+			str[13] = str[21];
+			str[14] = str[22];
+			str[15] = str[23];
+		}
+		str[16] = '\0';
+	}
 	str = &str[4];
 	return (str);
 }
@@ -42,15 +52,15 @@ static char		*get_link(t_file *file)
 	char	*tmp;
 	int		r;
 
-	r = 0;
 	tmp = NULL;
 	if (S_ISLNK(file->file_stat.st_mode))
 	{
-		link = ft_strnew(file->file_stat.st_size);
-		r = readlink(file->path, link, file->file_stat.st_size + 1);
+		r = (file->file_stat.st_size < 32) ? 32 : file->file_stat.st_size;
+		link = ft_strnew(r);
+		r = readlink(file->path, link, r + 1);
 		if (r > 0 && link)
 		{
-			link[file->file_stat.st_size] = '\0';
+			link[r] = '\0';
 			tmp = link;
 			link = ft_strjoin(" -> ", tmp);
 			ft_strdel(&tmp);
@@ -67,7 +77,7 @@ char		**get_long(t_file *file, char *flags)
 
 	res = (char**)ft_memalloc(sizeof(char*) * 3);
 	res[0] = get_link(file);
-	res[1] = cut_time(get_time(file->file_stat, flags));
-	res[2] = get_rights(file->file_stat);
+	res[1] = cut_time(get_time(file->file_stat, flags), flags);
+	res[2] = get_rights(file->file_stat, file->path);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 13:48:12 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/18 14:31:49 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/20 10:08:54 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,34 @@ static char		get_exec_permissions(int a, int b, int c)
 	}
 }
 
-char		*get_rights(struct stat filestat)
+static int		is_acl(char *path)
+{
+	acl_t		get;
+	int			i;
+
+	i = 0;
+	get = acl_get_file(path, ACL_TYPE_EXTENDED);
+	if (get != (acl_t)NULL)
+		i = 1;
+	acl_free(get);
+	return (i);
+}
+
+static int		is_ext_attr(char *path)
+{
+	char		*liste;
+
+	liste = NULL;
+	if (listxattr(path, liste, 0, 0) > 0)
+		return (1);
+	return (0);
+}
+
+char			*get_rights(struct stat filestat, char *path)
 {
 	char	*rights;
 
-	rights = ft_strnew(10);
+	rights = ft_strnew(11);
 	rights[0] = get_file_type(filestat);
 	rights[1] = (filestat.st_mode & S_IRUSR) ? 'r' : '-';
 	rights[2] = (filestat.st_mode & S_IWUSR) ? 'w' : '-';
@@ -76,6 +99,12 @@ char		*get_rights(struct stat filestat)
 	rights[7] = (filestat.st_mode & S_IROTH) ? 'r' : '-';
 	rights[8] = (filestat.st_mode & S_IWOTH) ? 'w' : '-';
 	rights[9] = get_exec_permissions(filestat.st_mode & S_IXOTH,
-			filestat.st_mode & S_ISVTX, 0);
+			filestat.st_mode & S_ISVTX, 1);
+	if (is_acl(path))
+		rights[10] = '+';
+	if (is_ext_attr(path))
+		rights[10] = '@';
+	if (rights[10] == '\0')
+		rights[10] = ' ';
 	return (rights);
 }

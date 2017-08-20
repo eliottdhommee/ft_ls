@@ -6,13 +6,13 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 14:28:23 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/18 15:39:22 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/20 14:32:41 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-static char		*check_padding(t_file *file, char *flags)
+char			*check_padding(t_file *file, char *flags)
 {
 	if ((int)flags['2'] < ft_nbrlen(file->file_stat.st_nlink))
 		flags['2'] = (char)ft_nbrlen(file->file_stat.st_nlink);
@@ -42,9 +42,12 @@ void			get_dir(t_file *file, char *flags)
 	while ((dir = readdir(fd)))
 	{
 		tmp = NULL;
-		if ((dir->d_name[0] != '.') || flags['a'] == 'a')
+		if ((dir->d_name[0] != '.' || flags['a'] == 'a' || flags['A'] == 'A') &&
+				((ft_strcmp(dir->d_name, ".\0") &&
+				ft_strcmp(dir->d_name, "..\0")) ||
+				 (flags['A'] != 'A'  || flags['a'])))
 		{
-			tmp = get_stat(file, dir->d_name);
+			tmp = get_stat(file, dir->d_name, flags);
 			if (tmp)
 			{
 				(file)->size += tmp->file_stat.st_blocks;

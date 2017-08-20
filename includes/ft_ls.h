@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/18 16:37:44 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/20 14:32:14 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <libft.h>
 # include <dirent.h>
 # include <sys/stat.h>
+# include <sys/acl.h>
+# include <sys/xattr.h>
 # include <pwd.h>
 # include <sys/types.h>
 # include <grp.h>
@@ -37,15 +39,17 @@ char				*init_flags(char **str);
 void				delete_tab(char **tab);
 void				error(void);
 void				get_dir(t_file *file, char *flags);
-t_file				*get_stat(t_file *dir, char *pathfile);
+t_file				*get_stat(t_file *dir, char *pathfile, char *flags);
 int					print_main(t_btree *root, char *flags, int opt, int f);
 void				print_dir(t_btree *root, char *flags);
-char				*get_rights(struct stat filestat);
+char				*get_rights(struct stat filestat, char *path);
 int					cmpt(void *data, void *data2);
 int					cmptc(void *data, void *data2);
 int					cmptu(void *data, void *data2);
 int					cmptum(void *data, void *data2);
 void				delete_file(void *file);
 char				**get_long(t_file *file, char *flags);
+void				reset_padding(char *str);
+char				*check_padding(t_file *file, char *flags);
 
 #endif

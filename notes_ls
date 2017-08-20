@@ -1,0 +1,11 @@
+  -@ : afficher les attribus etendus
+// -A : -a sans . et ..
+-e : afficher les ACL
+-G : ajouter des couleurs
+-H : suivre les liens sauf pour -F -d -l
+-h : racourcir la size
+//-n : afficher les ids des user et groupe, active -l
+//-o : -l sans le group id
+//-p : ajouter un / apres le nom d'un dossier
+//-T : si -l afficher la date en entier
+deja fait : -AacdfgilLnoPRrsSTtuU
