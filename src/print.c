@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 10:57:20 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/20 13:57:01 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/20 21:42:46 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void			print_dir(t_btree *root, char *flags)
 {
 	if (root)
 	{
-		if (flags['r'] == 'r')
+		if (flags['r'])
 			print_dir(root->right, flags);
 		else
 			print_dir(root->left, flags);
@@ -51,13 +51,13 @@ void			print_dir(t_btree *root, char *flags)
 			ft_printf("%d ", ((t_file*)root->item)->file_stat.st_ino);
 		if (flags['s'])
 			ft_printf("%d ", ((t_file*)root->item)->file_stat.st_blocks);
-		if (flags['l'] == 'l')
+		if (flags['l'])
 			print_dir_long(root, flags);
 		else
 			ft_printf("%s%c\n", ((t_file*)root->item)->name, (flags['p'] &&
 					S_ISDIR(((t_file*)root->item)->file_stat.st_mode)) ? '/'
 					: '\0');
-		if (flags['r'] == 'r')
+		if (flags['r'])
 			print_dir(root->left, flags);
 		else
 			print_dir(root->right, flags);
@@ -66,16 +66,20 @@ void			print_dir(t_btree *root, char *flags)
 
 static int		print_recursion(t_btree *root, char *flags, int opt, int f)
 {
+	int		size;
+	void	*comp;
+
+	comp = ret_cmpf(flags);
 	if (f == 0)
 		ft_printf("\n");
 	f = 0;
 	if (opt != 2)
 		ft_printf("%s:\n", ((t_file*)root->item)->path);
-	get_dir((t_file*)(root->item), flags);
+	size = get_dir((t_file*)(root->item), flags, comp);
 	if ((flags['l'] || flags['s']) && ((t_file*)root->item)->root_files)
-		ft_printf("total %d\n", ((t_file*)root->item)->size);
+		ft_printf("total %d\n", size);
 	print_dir(((t_file*)root->item)->root_files, flags);
-	if (flags['R'] == 'R')
+	if (flags['R'])
 		f = print_main(((t_file*)root->item)->root_files, flags, 0, f);
 	reset_padding(flags);
 	btree_delete(((t_file*)root->item)->root_files, &delete_file);
@@ -88,8 +92,8 @@ int				print_main(t_btree *root, char *flags, int opt, int f)
 		return (f);
 	f = (flags['r']) ? print_main(root->right, flags, opt, f) :
 		print_main(root->left, flags, opt, f);
-	if (((t_file*)root->item)->file_stat.st_mode
-			& S_IFDIR && (flags['R'] == 'R' || opt == 1 || opt == 2) &&
+	if (S_ISDIR(((t_file*)root->item)->file_stat.st_mode) &&
+			(flags['R'] || opt != 0) &&
 			(ft_strcmp(".\0", ((t_file*)root->item)->name) || opt == 2)
 			&& ft_strcmp("..\0", ((t_file*)root->item)->name))
 	{

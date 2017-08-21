@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 14:29:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/20 12:31:10 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/20 17:44:38 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static int				get_time(struct stat file_stat, char *flags)
 {
-	if (flags['c'] == 'c')
+	if (flags['c'])
 		return (file_stat.st_ctime);
-	else if (flags['u'] == 'u')
+	else if (flags['u'])
 		return (file_stat.st_atime);
-	else if (flags['U'] == 'U')
+	else if (flags['U'])
 		return (file_stat.st_birthtime);
 	else
 		return (file_stat.st_mtime);

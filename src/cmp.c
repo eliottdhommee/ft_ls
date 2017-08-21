@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 17:37:25 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/17 17:39:12 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/20 17:43:18 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ static int		cmpnosort(void *data, void *data2)
 
 void			*ret_cmpf(char *flags)
 {
-	if (flags['t'] == 't')
+	if (flags['t'])
 	{
-		if (flags['c'] == 'c')
+		if (flags['c'])
 			return (&cmptc);
-		else if (flags['u'] == 'u')
+		else if (flags['u'])
 			return (&cmptu);
-		else if (flags['U'] == 'U')
+		else if (flags['U'])
 			return (&cmptum);
 		else
 			return (&cmpt);
 	}
-	else if (flags['S'] == 'S')
+	else if (flags['S'])
 		return (&cmpsize);
-	else if (flags['f'] == 'f')
+	else if (flags['f'])
 		return (&cmpnosort);
 	else
 		return (&cmpstr);

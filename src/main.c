@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:45:40 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/20 14:32:18 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/20 17:29:44 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,20 @@ int				main(int argc, char **argv)
 	t_btree		*dir;
 	t_file		*tmp;
 
+	files = NULL;
 	flags = init_flags(&flags);
-	get_args(&files, &dir, argv, flags);
-	if (!argc || (dir == NULL && files == NULL))
+	if (argc > 1)
+	{
+		get_args(&files, &dir, argv, flags);
+		print_dir(files, flags);
+		btree_delete(files, &delete_file);
+	}
+	if (!files && !dir)
 	{
 		tmp = get_stat(NULL, ".\0", flags);
 		btree_insert_data(&dir, tmp, ret_cmpf(flags));
 	}
-	print_dir(files, flags);
 	print_main(dir, flags, (files || dir->left || dir->right) ? 1 : 2, 1);
-	btree_delete(files, &delete_file);
 	btree_delete(dir, &delete_file);
 	ft_strdel(&flags);
 	return (0);

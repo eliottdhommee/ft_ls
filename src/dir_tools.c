@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 14:28:23 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/20 14:32:41 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/20 17:42:13 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,32 @@ char			*check_padding(t_file *file, char *flags)
 	return (flags);
 }
 
-void			get_dir(t_file *file, char *flags)
+int				get_dir(t_file *file, char *flags, void *comp)
 {
 	DIR				*fd;
 	struct dirent	*dir;
 	t_file			*tmp;
+	int				size;
 
+	size = 0;
 	if (!file || !(fd = opendir((file)->path)))
-		return ;
+		return (0);
 	while ((dir = readdir(fd)))
 	{
 		tmp = NULL;
-		if ((dir->d_name[0] != '.' || flags['a'] == 'a' || flags['A'] == 'A') &&
+		if ((dir->d_name[0] != '.' || flags['a'] || flags['A']) &&
 				((ft_strcmp(dir->d_name, ".\0") &&
-				ft_strcmp(dir->d_name, "..\0")) ||
-				 (flags['A'] != 'A'  || flags['a'])))
+				ft_strcmp(dir->d_name, "..\0")) || (!flags['A'] || flags['a'])))
 		{
 			tmp = get_stat(file, dir->d_name, flags);
 			if (tmp)
 			{
-				(file)->size += tmp->file_stat.st_blocks;
-				btree_insert_data(&((file)->root_files), tmp, ret_cmpf(flags));
+				size += tmp->file_stat.st_blocks;
+				btree_insert_data(&(file->root_files), tmp, comp);
 				flags = check_padding(tmp, flags);
 			}
 		}
 	}
 	closedir(fd);
+	return (size);
 }

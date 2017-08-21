@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 17:52:54 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/20 13:16:41 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/21 20:18:25 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char		*get_uid(uid_t uid, char *flags)
 	struct passwd	*pass;
 
 	pass = getpwuid(uid);
-	if (pass && flags['n'] != 'n')
+	if (pass && !flags['n'])
 		return (ft_strdup(pass->pw_name));
 	else
 		return (ft_itoa(uid));
@@ -28,7 +28,7 @@ static char		*get_gid(gid_t gid, char *flags)
 	struct group	*grp;
 
 	grp = getgrgid(gid);
-	if (grp && flags['n'] != 'n')
+	if (grp && !flags['n'])
 		return (ft_strdup(grp->gr_name));
 	else
 		return (ft_itoa(gid));
@@ -64,11 +64,10 @@ t_file			*get_stat(t_file *dir, char *pathfile, char *flags)
 		lstat(path_final, &file->file_stat);
 	file->path = path_final;
 	file->name = ft_strdup(pathfile);
-	file->pass = (flags['g'] != 'g') ? get_uid(file->file_stat.st_uid, flags)
-		: ft_strdup("\0");
-	file->grp = (flags['o'] != 'o') ? get_gid(file->file_stat.st_gid, flags)
-		: ft_strdup("\0");
+	file->pass = (!flags['g']) ? get_uid(file->file_stat.st_uid, flags)
+		: ft_strdup("");
+	file->grp = (!flags['o']) ? get_gid(file->file_stat.st_gid, flags)
+		: ft_strdup("");
 	file->root_files = NULL;
-	file->size = 0;
 	return (file);
 }
