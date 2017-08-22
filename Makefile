@@ -32,7 +32,7 @@ LIB_LINK	= -Llibft -lft
 all: $(NAME)
 
 $(NAME): obj $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(LIB_LINK) -o $(NAME) $(OBJ) -fsanitize=address
+	$(CC) $(CFLAGS) $(LIB_LINK) -o $(NAME) $(OBJ)
 
 obj:
 	mkdir -p $(OBJ_DIR)
