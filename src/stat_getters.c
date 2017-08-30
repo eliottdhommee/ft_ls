@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 17:52:54 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/21 20:18:25 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/25 16:30:23 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,21 @@ t_file			*get_stat(t_file *dir, char *pathfile, char *flags)
 {
 	t_file		*file;
 	char		*path_final;
+	int			i;
 
+	i = 0;
 	if (dir != NULL)
 		path_final = create_path(dir->path, pathfile);
 	else
 		path_final = ft_strdup(pathfile);
 	if (!(file = (t_file*)malloc(sizeof(t_file))))
-		return (NULL);
-	if (flags['L'])
-		stat(path_final, &file->file_stat);
-	else
-		lstat(path_final, &file->file_stat);
+	{
+		perror(NULL);
+		exit(0);
+	}
+	if (!((flags['L'] && (i = stat(path_final, &file->file_stat)) == 0) || (!flags['L'] &&
+					(i = lstat(path_final, &file->file_stat)) == 0)))
+		perror(NULL);
 	file->path = path_final;
 	file->name = ft_strdup(pathfile);
 	file->pass = (!flags['g']) ? get_uid(file->file_stat.st_uid, flags)

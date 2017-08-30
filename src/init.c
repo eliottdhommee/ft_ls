@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:19:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/20 16:35:43 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/25 15:48:50 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 char		*init_flags(char **str)
 {
-	*str = ft_memalloc(sizeof(char*) * 128);
+	if (!(*str = ft_memalloc(sizeof(char*) * 128)))
+	{
+		perror(NULL);
+		exit(0);
+	}
 	ft_bzero(*str, sizeof(char) * 127);
 	return (*str);
 }

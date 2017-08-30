@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 14:29:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/20 17:44:38 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/25 15:47:03 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,11 @@ char		**get_long(t_file *file, char *flags)
 {
 	char	**res;
 
-	res = (char**)ft_memalloc(sizeof(char*) * 3);
+	if (!(res = (char**)ft_memalloc(sizeof(char*) * 3)))
+	{
+		perror(NULL);
+		exit(0);
+	}
 	res[0] = get_link(file);
 	res[1] = cut_time(get_time(file->file_stat, flags), flags);
 	res[2] = get_rights(file->file_stat, file->path);

@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/20 17:31:45 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/25 15:40:52 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <libft.h>
 # include <dirent.h>
+# include <errno.h>
 # include <sys/stat.h>
 # include <sys/acl.h>
 # include <sys/xattr.h>
