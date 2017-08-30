@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 10:57:20 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/20 21:42:46 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/30 12:04:05 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void		print_dir_long(t_btree *root, char *flags)
 	tab = get_long((t_file*)root->item, flags);
 	if (S_ISBLK(((t_file*)root->item)->file_stat.st_mode) ||
 			S_ISCHR(((t_file*)root->item)->file_stat.st_mode))
-		ft_printf("%s %*u %*s  %*s  %*u,%4u %s %s\n", tab[2],
+		printf("%s %*u %*s  %*s  %*u,%4u %s %s\n", tab[2],
 				(int)flags['2'], ((t_file*)root->item)->file_stat.st_nlink,
 				(int)flags['3'], ((t_file*)root->item)->pass,
 				(int)flags['4'], ((t_file*)root->item)->grp,
@@ -28,11 +28,11 @@ static void		print_dir_long(t_btree *root, char *flags)
 				tab[1],
 				((t_file*)root->item)->name);
 	else
-		ft_printf("%s %*u %*s  %*s  %*u %s %s%c%s\n", tab[2],
+		printf("%s %*u %*s  %*s  %*u %s %s%c%s\n", tab[2],
 				(int)flags['2'], ((t_file*)root->item)->file_stat.st_nlink,
 				(int)flags['3'], ((t_file*)root->item)->pass,
 				(int)flags['4'], ((t_file*)root->item)->grp,
-				(int)flags['5'], ((t_file*)root->item)->file_stat.st_size,
+				(int)flags['5'], (int)((t_file*)root->item)->file_stat.st_size,
 				tab[1], ((t_file*)root->item)->name, (flags['p'] &&
 					S_ISDIR(((t_file*)root->item)->file_stat.st_mode)) ? '/' :
 				'\0', tab[0]);
@@ -48,13 +48,13 @@ void			print_dir(t_btree *root, char *flags)
 		else
 			print_dir(root->left, flags);
 		if (flags['i'])
-			ft_printf("%d ", ((t_file*)root->item)->file_stat.st_ino);
+			printf("%d ", (int)((t_file*)root->item)->file_stat.st_ino);
 		if (flags['s'])
-			ft_printf("%d ", ((t_file*)root->item)->file_stat.st_blocks);
+			printf("%d ", (int)((t_file*)root->item)->file_stat.st_blocks);
 		if (flags['l'])
 			print_dir_long(root, flags);
 		else
-			ft_printf("%s%c\n", ((t_file*)root->item)->name, (flags['p'] &&
+			printf("%s%c\n", ((t_file*)root->item)->name, (flags['p'] &&
 					S_ISDIR(((t_file*)root->item)->file_stat.st_mode)) ? '/'
 					: '\0');
 		if (flags['r'])
@@ -74,10 +74,10 @@ static int		print_recursion(t_btree *root, char *flags, int opt, int f)
 		ft_printf("\n");
 	f = 0;
 	if (opt != 2)
-		ft_printf("%s:\n", ((t_file*)root->item)->path);
+		printf("%s:\n", ((t_file*)root->item)->path);
 	size = get_dir((t_file*)(root->item), flags, comp);
 	if ((flags['l'] || flags['s']) && ((t_file*)root->item)->root_files)
-		ft_printf("total %d\n", size);
+		printf("total %d\n", size);
 	print_dir(((t_file*)root->item)->root_files, flags);
 	if (flags['R'])
 		f = print_main(((t_file*)root->item)->root_files, flags, 0, f);

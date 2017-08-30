@@ -6,12 +6,11 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 13:48:12 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/20 10:08:54 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/30 17:07:59 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
-
 
 static char		get_file_type(struct stat filestat)
 {

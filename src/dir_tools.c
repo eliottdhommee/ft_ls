@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 14:28:23 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/25 16:20:21 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/30 17:07:16 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,10 @@ int				get_dir(t_file *file, char *flags, void *comp)
 	int				size;
 
 	size = 0;
-	if (!file)
+	if (!file || !(fd = opendir((file)->path)))
 		return (0);
-	if (!(fd = opendir((file)->path)))
-	{
-		perror(NULL);
-		return (0);
-	}
 	while ((dir = readdir(fd)))
 	{
-		tmp = NULL;
 		if ((dir->d_name[0] != '.' || flags['a'] || flags['A']) &&
 				((ft_strcmp(dir->d_name, ".\0") &&
 				ft_strcmp(dir->d_name, "..\0")) || (!flags['A'] || flags['a'])))

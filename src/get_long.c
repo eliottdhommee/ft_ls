@@ -6,13 +6,13 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 14:29:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/25 15:47:03 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/30 16:41:14 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-static int				get_time(struct stat file_stat, char *flags)
+static int		get_time(struct stat file_stat, char *flags)
 {
 	if (flags['c'])
 		return (file_stat.st_ctime);
@@ -32,7 +32,8 @@ static char		*cut_time(const time_t file_time, char *flags)
 	str[24] = '\0';
 	if (!flags['T'])
 	{
-		if (file_time < time(NULL) - 15778800 || file_time > time(NULL) + 15778800)
+		if (file_time < time(NULL) - 15778800 ||
+				file_time > time(NULL) + 15778800)
 		{
 			str[11] = ' ';
 			str[12] = str[20];
@@ -71,7 +72,7 @@ static char		*get_link(t_file *file)
 	return (link);
 }
 
-char		**get_long(t_file *file, char *flags)
+char			**get_long(t_file *file, char *flags)
 {
 	char	**res;
 

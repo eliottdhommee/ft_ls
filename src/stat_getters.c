@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 17:52:54 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/25 16:30:23 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/08/30 17:09:55 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ t_file			*get_stat(t_file *dir, char *pathfile, char *flags)
 		perror(NULL);
 		exit(0);
 	}
-	if (!((flags['L'] && (i = stat(path_final, &file->file_stat)) == 0) || (!flags['L'] &&
-					(i = lstat(path_final, &file->file_stat)) == 0)))
+	if (!((flags['L'] && (i = stat(path_final, &file->file_stat)) == 0) ||
+				(!flags['L'] &&
+				 (i = lstat(path_final, &file->file_stat)) == 0)))
 		perror(NULL);
 	file->path = path_final;
 	file->name = ft_strdup(pathfile);
