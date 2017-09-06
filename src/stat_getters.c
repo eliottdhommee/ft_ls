@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 17:52:54 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/30 17:09:55 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/06 17:15:50 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,45 +34,30 @@ static char		*get_gid(gid_t gid, char *flags)
 		return (ft_itoa(gid));
 }
 
-static char		*create_path(char *str1, char *str2)
-{
-	char	*res;
-	int		size;
-
-	size = ft_strlen(str1) + ft_strlen(str2);
-	res = ft_strnew(size + 1);
-	ft_strcpy(res, str1);
-	ft_strcat(res, "/");
-	ft_strcat(res, str2);
-	return (res);
-}
-
 t_file			*get_stat(t_file *dir, char *pathfile, char *flags)
 {
 	t_file		*file;
 	char		*path_final;
 	int			i;
 
-	i = 0;
-	if (dir != NULL)
-		path_final = create_path(dir->path, pathfile);
-	else
-		path_final = ft_strdup(pathfile);
-	if (!(file = (t_file*)malloc(sizeof(t_file))))
+	path_final = isnull((dir != NULL) ? ft_strcjoin(dir->path, pathfile, '/') :
+		ft_strdup(pathfile));
+	file = isnull(ft_memalloc(sizeof(t_file)));
+	i = (flags['L']) ? lstat(path_final, &file->file_stat) :
+		stat(path_final, &file->file_stat);
+	if (i != 0)
 	{
-		perror(NULL);
-		exit(0);
+		ft_memdel((void*)&file);
+		ft_error(0);
+		return (NULL);
 	}
-	if (!((flags['L'] && (i = stat(path_final, &file->file_stat)) == 0) ||
-				(!flags['L'] &&
-				 (i = lstat(path_final, &file->file_stat)) == 0)))
-		perror(NULL);
 	file->path = path_final;
-	file->name = ft_strdup(pathfile);
-	file->pass = (!flags['g']) ? get_uid(file->file_stat.st_uid, flags)
-		: ft_strdup("");
-	file->grp = (!flags['o']) ? get_gid(file->file_stat.st_gid, flags)
-		: ft_strdup("");
+	file->name = isnull(ft_strdup(pathfile));
+	file->pass = isnull((!flags['g']) ? get_uid(file->file_stat.st_uid, flags)
+		: ft_strdup(""));
+	file->grp = isnull((!flags['o']) ? get_gid(file->file_stat.st_gid, flags)
+		: ft_strdup(""));
+	file->type = get_file_type(file->file_stat);
 	file->root_files = NULL;
 	return (file);
 }

@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/18 14:29:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/30 16:41:14 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/06 17:35:43 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char		*get_link(t_file *file)
 	int		r;
 
 	tmp = NULL;
-	if (S_ISLNK(file->file_stat.st_mode))
+	if (file->type == 'l')
 	{
 		r = (file->file_stat.st_size < 32) ? 32 : file->file_stat.st_size;
 		link = ft_strnew(r);
@@ -76,12 +76,8 @@ char			**get_long(t_file *file, char *flags)
 {
 	char	**res;
 
-	if (!(res = (char**)ft_memalloc(sizeof(char*) * 3)))
-	{
-		perror(NULL);
-		exit(0);
-	}
-	res[0] = get_link(file);
+	res = isnull(ft_memalloc(sizeof(char*) * 3));
+	res[0] = isnull(get_link(file));
 	res[1] = cut_time(get_time(file->file_stat, flags), flags);
 	res[2] = get_rights(file->file_stat, file->path);
 	return (res);

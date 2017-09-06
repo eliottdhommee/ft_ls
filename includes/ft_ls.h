@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/30 12:03:05 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/06 17:02:04 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ typedef struct		s_file
 	t_btree			*root_files;
 	char			*pass;
 	char			*grp;
+	char			type;
 }					t_file;
 
 void				*ret_cmpf(char *flags);
-char				*init_flags(char **str);
 void				delete_tab(char **tab);
 void				error(void);
 int					get_dir(t_file *file, char *flags, void *comp);
@@ -52,5 +52,8 @@ void				delete_file(void *file);
 char				**get_long(t_file *file, char *flags);
 void				reset_padding(char *str);
 char				*check_padding(t_file *file, char *flags);
+char				get_file_type(struct stat filestat);
+void				*isnull(void *pt);
+int					ft_error(int i);
 
 #endif

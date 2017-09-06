@@ -6,21 +6,26 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:19:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/25 15:48:50 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/06 18:02:08 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-char		*init_flags(char **str)
+void		*isnull(void *pt)
 {
-	if (!(*str = ft_memalloc(sizeof(char*) * 128)))
+	if (!pt)
 	{
-		perror(NULL);
-		exit(0);
+		perror("ls");
+		exit(1);
 	}
-	ft_bzero(*str, sizeof(char) * 127);
-	return (*str);
+	return (pt);
+}
+
+int			ft_error(int i)
+{
+	perror("ls");
+	return (i);
 }
 
 void		reset_padding(char *str)
@@ -41,14 +46,15 @@ void		delete_tab(char **tab)
 
 void		delete_file(void *file)
 {
-	if (!file)
-		return ;
-	else
+	t_file		*tmp;
+
+	if (file)
 	{
-		ft_memdel((void*)&((t_file*)file)->name);
-		ft_memdel((void*)&((t_file*)file)->pass);
-		ft_memdel((void*)&((t_file*)file)->path);
-		ft_memdel((void*)&((t_file*)file)->grp);
-		ft_memdel((void*)&file);
+		tmp = file;
+		ft_strdel(&tmp->name);
+		ft_strdel(&tmp->pass);
+		ft_strdel(&tmp->path);
+		ft_strdel(&tmp->grp);
+		ft_memdel(&file);
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 13:48:12 by edhommee          #+#    #+#             */
-/*   Updated: 2017/08/30 17:07:59 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/06 17:36:30 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-static char		get_file_type(struct stat filestat)
+char			get_file_type(struct stat filestat)
 {
 	if (S_ISBLK(filestat.st_mode))
 		return ('b');
@@ -85,7 +85,7 @@ char			*get_rights(struct stat filestat, char *path)
 {
 	char	*rights;
 
-	rights = ft_strnew(11);
+	rights = isnull(ft_strnew(11));
 	rights[0] = get_file_type(filestat);
 	rights[1] = (filestat.st_mode & S_IRUSR) ? 'r' : '-';
 	rights[2] = (filestat.st_mode & S_IWUSR) ? 'w' : '-';
