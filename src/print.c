@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 10:57:20 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/06 17:07:30 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/07 16:11:47 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void			print_dir(t_btree *root, char *flags)
 {
 	if (root)
 	{
-		if (flags['r'])
+		if (!flags['r'])
 			print_dir(root->right, flags);
 		else
 			print_dir(root->left, flags);
@@ -56,7 +56,7 @@ void			print_dir(t_btree *root, char *flags)
 		else
 			ft_printf("%s%c\n", ((t_file*)root->item)->name, (flags['p'] &&
 					((t_file*)root->item)->type == 'd') ? '/' : '\0');
-		if (flags['r'])
+		if (!flags['r'])
 			print_dir(root->left, flags);
 		else
 			print_dir(root->right, flags);
@@ -74,7 +74,7 @@ static int		print_recursion(t_btree *root, char *flags, int opt, int f)
 	f = 0;
 	if (opt != 2)
 		ft_printf("%s:\n", ((t_file*)root->item)->path);
-	size = get_dir((t_file*)(root->item), flags, comp);
+	size = get_dir((t_file*)(root->item), flags);
 	if ((flags['l'] || flags['s']) && ((t_file*)root->item)->root_files)
 		ft_printf("total %d\n", size);
 	print_dir(((t_file*)root->item)->root_files, flags);
@@ -89,7 +89,7 @@ int				print_main(t_btree *root, char *flags, int opt, int f)
 {
 	if (!root)
 		return (f);
-	f = (flags['r']) ? print_main(root->right, flags, opt, f) :
+	f = (!flags['r']) ? print_main(root->right, flags, opt, f) :
 		print_main(root->left, flags, opt, f);
 	if (((t_file*)root->item)->type == 'd' && (flags['R'] || opt != 0) &&
 			(ft_strcmp(".\0", ((t_file*)root->item)->name) || opt == 2)
@@ -97,7 +97,7 @@ int				print_main(t_btree *root, char *flags, int opt, int f)
 	{
 		f = print_recursion(root, flags, opt, f);
 	}
-	f = (flags['r']) ? print_main(root->left, flags, opt, f) :
+	f = (!flags['r']) ? print_main(root->left, flags, opt, f) :
 		print_main(root->right, flags, opt, f);
 	return (f);
 }

@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 17:52:54 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/06 17:15:50 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/07 16:40:25 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ t_file			*get_stat(t_file *dir, char *pathfile, char *flags)
 	path_final = isnull((dir != NULL) ? ft_strcjoin(dir->path, pathfile, '/') :
 		ft_strdup(pathfile));
 	file = isnull(ft_memalloc(sizeof(t_file)));
-	i = (flags['L']) ? lstat(path_final, &file->file_stat) :
+	i = (!flags['L']) ? lstat(path_final, &file->file_stat) :
 		stat(path_final, &file->file_stat);
 	if (i != 0)
 	{
+		ft_strdel(&path_final);
 		ft_memdel((void*)&file);
 		ft_error(0);
 		return (NULL);

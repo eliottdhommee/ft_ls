@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 14:28:23 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/06 17:17:16 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/07 16:02:01 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char			*check_padding(t_file *file, char *flags)
 	return (flags);
 }
 
-static int		check_file(t_file *file, char *name, char *flags, void *comp)
+static int		check_file(t_file *file, char *name, char *flags)
 {
 	t_file		*tmp;
 
@@ -41,7 +41,7 @@ static int		check_file(t_file *file, char *name, char *flags, void *comp)
 		tmp = get_stat(file, name, flags);
 		if (tmp)
 		{
-			btree_insert_data(&(file->root_files), tmp, comp);
+			btree_insert_data(&(file->root_files), tmp, ret_cmpf(flags));
 			flags = check_padding(tmp, flags);
 			return (tmp->file_stat.st_blocks);
 		}
@@ -49,7 +49,7 @@ static int		check_file(t_file *file, char *name, char *flags, void *comp)
 	return (0);
 }
 
-int				get_dir(t_file *file, char *flags, void *comp)
+int				get_dir(t_file *file, char *flags)
 {
 	DIR				*fd;
 	struct dirent	*dir;
@@ -61,7 +61,7 @@ int				get_dir(t_file *file, char *flags, void *comp)
 	if (!(fd = opendir((file)->path)))
 		return (ft_error(0));
 	while ((dir = readdir(fd)))
-		size += check_file(file, dir->d_name, flags, comp);
+		size += check_file(file, dir->d_name, flags);
 	closedir(fd);
 	return (size);
 }
