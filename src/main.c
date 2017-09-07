@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:45:40 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/06 18:01:50 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/07 22:18:49 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		ft_usage(char c)
 {
-	ft_printf("%s %c\nusage: ls [-%s] [file...]\n",
+	ft_printf("%s %c\nusage: ls [-%s] [file ...]\n",
 			"ls: illegal option --", c, OPTIONS);
 	exit(1);
 }

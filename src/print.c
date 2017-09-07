@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 10:57:20 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/07 16:11:47 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/07 22:39:37 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ static void		print_dir_long(t_btree *root, char *flags)
 				tab[1],
 				((t_file*)root->item)->name);
 	else
-		ft_printf("%s %*u %*s  %*s  %*u %s %s%c%s\n", tab[2],
+		ft_printf("%s %*u %*s  %*s  %*u %s %s%s%s\n", tab[2],
 				(int)flags['2'], ((t_file*)root->item)->file_stat.st_nlink,
 				(int)flags['3'], ((t_file*)root->item)->pass,
 				(int)flags['4'], ((t_file*)root->item)->grp,
 				(int)flags['5'], (int)((t_file*)root->item)->file_stat.st_size,
 				tab[1], ((t_file*)root->item)->name, (flags['p'] &&
-					((t_file*)root->item)->type == 'd') ? '/' :
-				'\0', tab[0]);
+					((t_file*)root->item)->type == 'd') ? "/" :
+				"", tab[0]);
 	delete_tab(tab);
 }
 
@@ -43,7 +43,7 @@ void			print_dir(t_btree *root, char *flags)
 {
 	if (root)
 	{
-		if (!flags['r'])
+		if (flags['r'])
 			print_dir(root->right, flags);
 		else
 			print_dir(root->left, flags);
@@ -54,9 +54,9 @@ void			print_dir(t_btree *root, char *flags)
 		if (flags['l'])
 			print_dir_long(root, flags);
 		else
-			ft_printf("%s%c\n", ((t_file*)root->item)->name, (flags['p'] &&
-					((t_file*)root->item)->type == 'd') ? '/' : '\0');
-		if (!flags['r'])
+			ft_printf("%s%s\n", ((t_file*)root->item)->name, (flags['p'] &&
+					((t_file*)root->item)->type == 'd') ? "/" : "");
+		if (flags['r'])
 			print_dir(root->left, flags);
 		else
 			print_dir(root->right, flags);
@@ -66,11 +66,9 @@ void			print_dir(t_btree *root, char *flags)
 static int		print_recursion(t_btree *root, char *flags, int opt, int f)
 {
 	int		size;
-	void	*comp;
 
-	comp = ret_cmpf(flags);
 	if (f == 0)
-		ft_printf("\n");
+		ft_putchar('\n');
 	f = 0;
 	if (opt != 2)
 		ft_printf("%s:\n", ((t_file*)root->item)->path);
@@ -89,7 +87,7 @@ int				print_main(t_btree *root, char *flags, int opt, int f)
 {
 	if (!root)
 		return (f);
-	f = (!flags['r']) ? print_main(root->right, flags, opt, f) :
+	f = (flags['r']) ? print_main(root->right, flags, opt, f) :
 		print_main(root->left, flags, opt, f);
 	if (((t_file*)root->item)->type == 'd' && (flags['R'] || opt != 0) &&
 			(ft_strcmp(".\0", ((t_file*)root->item)->name) || opt == 2)
@@ -97,7 +95,7 @@ int				print_main(t_btree *root, char *flags, int opt, int f)
 	{
 		f = print_recursion(root, flags, opt, f);
 	}
-	f = (!flags['r']) ? print_main(root->left, flags, opt, f) :
+	f = (flags['r']) ? print_main(root->left, flags, opt, f) :
 		print_main(root->right, flags, opt, f);
 	return (f);
 }

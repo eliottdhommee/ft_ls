@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:19:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/06 18:02:08 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/07 21:57:55 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void		delete_file(void *file)
 	if (file)
 	{
 		tmp = file;
-		ft_strdel(&tmp->name);
 		ft_strdel(&tmp->pass);
 		ft_strdel(&tmp->path);
 		ft_strdel(&tmp->grp);

@@ -6,7 +6,7 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 17:52:54 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/07 16:40:25 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/07 21:59:38 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_file			*get_stat(t_file *dir, char *pathfile, char *flags)
 		return (NULL);
 	}
 	file->path = path_final;
-	file->name = isnull(ft_strdup(pathfile));
+	file->name = (dir) ? &file->path[ft_strlen(dir->path) + 1] : file->path;
 	file->pass = isnull((!flags['g']) ? get_uid(file->file_stat.st_uid, flags)
 		: ft_strdup(""));
 	file->grp = isnull((!flags['o']) ? get_gid(file->file_stat.st_gid, flags)
