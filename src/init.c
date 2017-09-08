@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:19:49 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/07 21:57:55 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/08 16:12:45 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int			ft_error(int i)
 
 void		reset_padding(char *str)
 {
-	str['2'] = '\0';
-	str['3'] = '\0';
-	str['4'] = '\0';
-	str['5'] = '\0';
-	str['6'] = '\0';
+	str['2'] = 0;
+	str['3'] = 0;
+	str['4'] = 0;
+	str['5'] = 0;
+	str['6'] = 0;
 }
 
 void		delete_tab(char **tab)

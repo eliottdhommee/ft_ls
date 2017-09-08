@@ -6,28 +6,28 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 17:37:25 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/07 16:17:44 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/08 15:48:46 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-static int		cmpstr(void *data, void *data2)
+int		cmpstr(void *data, void *data2)
 {
 	return (ft_strcmp(((t_file*)data)->name, ((t_file*)data2)->name));
 }
 
 static int		cmpsize(void *data, void *data2)
 {
-	return (((t_file*)data)->file_stat.st_size -
-			((t_file*)data2)->file_stat.st_size);
+	return (((t_file*)data2)->file_stat.st_size -
+			((t_file*)data)->file_stat.st_size);
 }
 
 static int		cmpnosort(void *data, void *data2)
 {
 	if (data && data2)
-		return (0);
-	return (0);
+		return (-1);
+	return (-1);
 }
 
 void			*ret_cmpf(char *flags)

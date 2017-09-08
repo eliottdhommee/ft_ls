@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:45:40 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/07 22:18:49 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/08 15:54:10 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int				main(int argc, char **argv)
 	{
 		print_dir(files, flags);
 		btree_delete(files, &delete_file);
+		ft_putchar('\n');
 	}
 	if (dir)
 	{

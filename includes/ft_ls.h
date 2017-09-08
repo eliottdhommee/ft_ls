@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/07 15:54:58 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/08 15:36:22 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct		s_file
 }					t_file;
 
 void				*ret_cmpf(char *flags);
+int					cmpstr(void *data, void *data2);
 void				delete_tab(char **tab);
 void				error(void);
 int					get_dir(t_file *file, char *flags);
