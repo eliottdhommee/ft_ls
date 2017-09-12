@@ -6,13 +6,13 @@
 /*   By: edhommee <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 17:37:25 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/08 15:48:46 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/12 09:44:54 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-int		cmpstr(void *data, void *data2)
+int				cmpstr(void *data, void *data2)
 {
 	return (ft_strcmp(((t_file*)data)->name, ((t_file*)data2)->name));
 }
