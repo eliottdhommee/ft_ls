@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:45:40 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/08 15:54:10 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/18 14:39:22 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		ft_usage(char c)
 {
-	ft_printf("%s %c\nusage: ls [-%s] [file ...]\n",
+	ft_printf("%w%s %c\nusage: ls [-%s] [file ...]\n", 2,
 			"ls: illegal option --", c, OPTIONS);
 	exit(1);
 }
@@ -25,7 +25,7 @@ static int		get_flags_ls(char **argv, char *flags)
 	int			j;
 
 	i = 0;
-	while (argv[++i] && argv[i][0] == '-' && flags['-'] != '-')
+	while (argv[++i] && argv[i][0] == '-' && argv[i][1] && flags['-'] != '-')
 	{
 		j = 0;
 		while (argv[i][++j])
@@ -56,18 +56,20 @@ static void		get_args(t_btree **fil, t_btree **dir, char **tab, char *flags)
 	if (!tab[i])
 	{
 		tmp = get_stat(NULL, ".\0", flags);
-		if (tmp)
+		if (tmp && !flags['d'])
 			btree_insert_data(dir, tmp, ret_cmpf(flags));
+		else if (flags['d'])
+			btree_insert_data(fil, tmp, ret_cmpf(flags));
 	}
 	while (tab[i])
 	{
 		tmp = get_stat(NULL, tab[i], flags);
 		if (tmp)
 		{
-			if (tmp->type != 'd')
-				btree_insert_data(fil, tmp, ret_cmpf(flags));
-			else if (tmp->type == 'd' && !flags['d'])
+			if (tmp->type == 'd' && !flags['d'])
 				btree_insert_data(dir, tmp, ret_cmpf(flags));
+			else
+				btree_insert_data(fil, tmp, ret_cmpf(flags));
 			flags = check_padding(tmp, flags);
 		}
 		i++;
@@ -90,7 +92,8 @@ int				main(int argc, char **argv)
 	{
 		print_dir(files, flags);
 		btree_delete(files, &delete_file);
-		ft_putchar('\n');
+		if (dir)
+			ft_putchar('\n');
 	}
 	if (dir)
 	{

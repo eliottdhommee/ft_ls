@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 10:57:20 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/08 16:20:14 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/19 14:30:32 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void			print_dir(t_btree *root, char *flags)
 			print_dir_long(root, flags);
 		else
 			ft_printf("%s%s\n", ((t_file*)root->item)->name, (flags['p'] &&
-					((t_file*)root->item)->type == 'd') ? "/" : "");
+						((t_file*)root->item)->type == 'd') ? "/" : "");
 		if (flags['r'])
 			print_dir(root->left, flags);
 		else
@@ -76,9 +76,9 @@ static int		print_recursion(t_btree *root, char *flags, int opt, int f)
 	if ((flags['l'] || flags['s']) && ((t_file*)root->item)->root_files)
 		ft_printf("total %d\n", size);
 	print_dir(((t_file*)root->item)->root_files, flags);
+	reset_padding(flags);
 	if (flags['R'])
 		f = print_main(((t_file*)root->item)->root_files, flags, 0, f);
-	reset_padding(flags);
 	btree_delete(((t_file*)root->item)->root_files, &delete_file);
 	return (f);
 }
@@ -89,7 +89,9 @@ int				print_main(t_btree *root, char *flags, int opt, int f)
 		return (f);
 	f = (flags['r']) ? print_main(root->right, flags, opt, f) :
 		print_main(root->left, flags, opt, f);
-	if (((t_file*)root->item)->type == 'd' && (flags['R'] || opt != 0))
+	if (((t_file*)root->item)->type == 'd' && (flags['R'] || opt != 0) &&
+			(opt != 0 || (ft_strcmp(((t_file*)root->item)->name, ".") &&
+			ft_strcmp(((t_file*)root->item)->name, ".."))))
 	{
 		f = print_recursion(root, flags, opt, f);
 	}

@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/08 15:36:22 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/09/19 14:28:03 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <pwd.h>
 # include <sys/types.h>
 # include <grp.h>
-# define OPTIONS "ABCFGHLOPRSTUW@abcdefghiklmnopqrstuwx1"
+# define OPTIONS "ALRSTUacdfgilnoprstu1"
 
 typedef struct		s_file
 {
