@@ -23,7 +23,7 @@ SRC			= $(addprefix $(SRC_DIR),$(SRC_NAME))
 OBJ_DIR		= ./obj/
 OBJ			= $(addprefix $(OBJ_DIR),$(SRC_NAME:.c=.o))
 
-INCLUDES	=  -I ./includes
+INCLUDES	=  -I ./includes -I ./libft/includes
 
 LIB_DIR		= ./libft/
 LIBFT		= $(LIB_DIR)libft.a
