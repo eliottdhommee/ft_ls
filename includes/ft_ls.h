@@ -6,7 +6,7 @@
 /*   By: edhommee <eliottdhommee@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 11:44:50 by edhommee          #+#    #+#             */
-/*   Updated: 2017/09/19 14:28:03 by edhommee         ###   ########.fr       */
+/*   Updated: 2017/12/13 16:12:37 by edhommee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_LS_H
 
 # include <libft.h>
+# include <libbtree.h>
 # include <stdio.h>
 # include <dirent.h>
 # include <errno.h>
